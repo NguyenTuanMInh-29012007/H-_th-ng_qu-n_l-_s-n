@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hệ thống đặt sân thể thao nội bộ</title>
+<style>
+:root{--bg:#f3f7f4;--cd:#fff;--tx:#16241d;--mu:#60726a;--bd:#d9e4de;--pr:#12805c;--pt:#fff;--ok:#d6f1e2;--okt:#0b5a3e;--wa:#fff0bf;--wat:#765200;--er:#fde0e0;--ert:#9b1c1c;--gr:#e4e8e6;--grt:#56625c;--inf:#dbe9fb;--inft:#1d4f91;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1713;--cd:#17221c;--tx:#e6f0ea;--mu:#93a79c;--bd:#2a3b32;--pr:#2fb386;--pt:#06231a;--ok:#12392a;--okt:#8fe3bc;--wa:#47390c;--wat:#f3d777;--er:#471b1b;--ert:#f5a3a3;--gr:#2a342f;--grt:#a9b8af;--inf:#16304f;--inft:#9cc4f5;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0f1713;--cd:#17221c;--tx:#e6f0ea;--mu:#93a79c;--bd:#2a3b32;--pr:#2fb386;--pt:#06231a;--ok:#12392a;--okt:#8fe3bc;--wa:#47390c;--wat:#f3d777;--er:#471b1b;--ert:#f5a3a3;--gr:#2a342f;--grt:#a9b8af;--inf:#16304f;--inft:#9cc4f5;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"DejaVu Sans",sans-serif}
+header{background:var(--cd);border-bottom:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:12px;padding:10px 18px;flex-wrap:wrap}
+.logo{font-weight:700;color:var(--pr);font-size:17px;white-space:nowrap}
+nav{display:flex;gap:4px;flex:1;overflow-x:auto}
+nav button{background:none;border:0;color:var(--mu);padding:8px 12px;border-radius:8px;font:inherit;cursor:pointer;white-space:nowrap}
+nav button.on{background:var(--ok);color:var(--okt);font-weight:600}
+.ur{display:flex;align-items:center;gap:8px;font-size:14px}.ur small{color:var(--mu)}
+main{max-width:1180px;margin:0 auto;padding:20px 18px 40px}
+h2{margin:0 0 14px;font-size:21px}h3{margin:0 0 10px;font-size:16px}
+.btn{background:var(--pr);color:var(--pt);border:0;border-radius:8px;padding:8px 14px;font:inherit;font-weight:600;cursor:pointer}
+.btn.o{background:none;color:var(--pr);border:1px solid var(--pr)}.btn.d{background:var(--er);color:var(--ert)}.btn.s{padding:5px 10px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--cd);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;width:100%}
+label{display:block;font-size:13px;color:var(--mu);margin:10px 0 4px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}.bar input,.bar select{width:auto;min-width:160px}
+.chip{border:1px solid var(--bd);background:var(--cd);color:var(--tx);border-radius:99px;padding:6px 14px;cursor:pointer;font:inherit;font-size:14px}.chip.on{background:var(--pr);color:var(--pt);border-color:var(--pr)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.cd{background:var(--cd);border:1px solid var(--bd);border-radius:14px;overflow:hidden}.pad{padding:16px}
+.art{height:120px;display:flex;align-items:center;justify-content:center;font-size:54px;background:linear-gradient(135deg,#1b9a6f,#0c5e48)}
+.cd p{margin:4px 0;color:var(--mu);font-size:14px}
+.bd{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12.5px;font-weight:600}
+.ok{background:var(--ok);color:var(--okt)}.wa{background:var(--wa);color:var(--wat)}.er{background:var(--er);color:var(--ert)}.gr{background:var(--gr);color:var(--grt)}.inf{background:var(--inf);color:var(--inft)}
+.days{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px}.days .chip{border-radius:10px;text-align:center;line-height:1.3;min-width:70px}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.sl{border:1.5px solid transparent;border-radius:10px;padding:10px;text-align:left;font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:2px;color:inherit}
+.sl small{font-size:12.5px}.sl.free{background:var(--ok);color:var(--okt)}.sl.free:hover{border-color:var(--pr)}.sl.pend{background:var(--wa);color:var(--wat)}.sl.busy{background:var(--er);color:var(--ert)}.sl.maint,.sl.past{background:var(--gr);color:var(--grt)}.sl.mine{border-color:currentColor}.sl:disabled{cursor:not-allowed}
+.lg{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0;font-size:13px;color:var(--mu)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.tw{overflow-x:auto;background:var(--cd);border:1px solid var(--bd);border-radius:12px}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}th{color:var(--mu);font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}tr:last-child td{border-bottom:0}td.w{white-space:normal;min-width:160px}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}.kp .cd{padding:14px}.kp b{font-size:26px;display:block}.kp span{color:var(--mu);font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:800px){.two{grid-template-columns:1fr}}
+.br{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:13.5px}.br span:first-child{width:130px;flex:none}.br div{flex:1;background:var(--gr);border-radius:6px;height:16px}.br div i{display:block;height:100%;background:var(--pr);border-radius:6px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}.md{background:var(--cd);border-radius:14px;padding:20px;width:100%;max-width:460px;max-height:90vh;overflow:auto}
+.md .ac{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}.err{color:var(--ert);font-size:13.5px;margin-top:8px;min-height:18px}
+#toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 18px;border-radius:10px;z-index:30;display:none;font-size:14px}
+.lo{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#0c5e48,#1b9a6f)}.lo .cd{width:100%;max-width:400px;padding:26px}
+.hint{font-size:13px;color:var(--mu);margin-top:14px}.hint button{margin:4px 4px 0 0}.mu{color:var(--mu)}.pg{display:flex;gap:6px;align-items:center;justify-content:flex-end;margin-top:12px;font-size:13px}
+</style></head><body>
+<div id="app"></div><div id="modal"></div><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pad=n=>String(n).padStart(2,'0'),fmt=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const NOW=()=>new Date(),T0=()=>{const d=NOW();d.setHours(0,0,0,0);return d};
+const dayAdd=n=>{const d=T0();d.setDate(d.getDate()+n);return fmt(d)};
+const vd=s=>{const[y,m,d]=s.split('-');return d+'/'+m+'/'+y},WD=['CN','T2','T3','T4','T5','T6','T7'];
+const ST={PENDING:['Chờ xác nhận','wa'],CONFIRMED:['Đã xác nhận','ok'],REJECTED:['Từ chối','er'],CANCELLED:['Đã hủy','gr'],COMPLETED:['Hoàn thành','inf'],NO_SHOW:['Vắng mặt','er']};
+const act=b=>b.status=='PENDING'||b.status=='CONFIRMED',badge=s=>`<span class="bd ${ST[s][1]}">${ST[s][0]}</span>`;
+let DB,S={u:null,view:'',t:0,q:'',court:0,date:dayAdd(0),pg:1,tab:'wait',reg:0};
+const K='dat_san_v1',save=()=>{try{localStorage.setItem(K,JSON.stringify(DB))}catch(e){}};
+const slotO=id=>DB.slots.find(s=>s.id==id),courtO=id=>DB.courts.find(c=>c.id==id),userO=id=>DB.users.find(u=>u.id==id),sportO=id=>DB.sports.find(s=>s.id==id);
+const stAt=b=>new Date(b.date+'T'+slotO(b.slot).s+':00');
+
+function seed(){
+ let r=7;const rnd=()=>(r=(r*16807)%2147483647)/2147483647;
+ const D={cfg:{adv:7,day:2,max:5,cancelH:2,miss:3},nid:5000,nt:[],maint:[],bk:[],slots:[],
+  sports:['Cầu lông|🏸','Bóng đá mini|⚽','Bóng rổ|🏀','Bóng chuyền|🏐','Tennis|🎾','Bóng bàn|🏓'].map((x,i)=>({id:i+1,name:x.split('|')[0],icon:x.split('|')[1],on:1})),
+  courts:[[1,'Sân cầu lông A1','Nhà thể thao đa năng, tầng 1',8],[1,'Sân cầu lông A2','Nhà thể thao đa năng, tầng 1',8],[2,'Sân bóng đá mini B1','Khu thể thao ngoài trời',14],[3,'Sân bóng rổ C1','Nhà thi đấu số 2',10],[4,'Sân bóng chuyền D1','Nhà thi đấu số 2',12],[5,'Sân tennis E1','Khu thể thao ngoài trời',4],[6,'Phòng bóng bàn F1','Nhà thể thao đa năng, tầng 2',6]].map((c,i)=>({id:i+1,sport:c[0],name:c[1],loc:c[2],cap:c[3],on:1})),
+  users:[[1,'admin@example.edu.vn','Admin@12345','Quản trị viên','QTV001','0900000001','ADMIN'],[2,'user01@example.edu.vn','User@12345','Trần Văn An','B25DT001','0900000002','USER'],[3,'lehoangnam@example.edu.vn','User@12345','Lê Hoàng Nam','B25DT002','0900000003','USER'],[4,'phamthuha@example.edu.vn','User@12345','Phạm Thu Hà','B25DT003','0900000004','USER'],[5,'vuquanghuy@example.edu.vn','User@12345','Vũ Quang Huy','B25DT004','0900000005','USER']].map(u=>({id:u[0],email:u[1],pw:u[2],name:u[3],code:u[4],phone:u[5],role:u[6],locked:0,until:''}))};
+ for(let h=6;h<22;h++)D.slots.push({id:h-5,s:pad(h)+':00',e:pad(h+1)+':00',on:1});
+ D.maint.push({id:1,court:6,date:dayAdd(3),slot:0,reason:'Bảo dưỡng mặt sân'});
+ const add=(user,court,slot,off,purpose,n,status,reason)=>{const date=dayAdd(off);
+  if(D.bk.some(b=>b.court==court&&b.date==date&&b.slot==slot)||D.maint.some(m=>m.court==court&&m.date==date))return;
+  D.bk.push({id:D.bk.length+1,user,court,slot,date,purpose,n,status,reason:reason||'',created:Date.now()-36e5*(status=='PENDING'?1+rnd()*5:48)})};
+ [[2,1,14,-1,'Tập luyện CLB cầu lông',6,'COMPLETED'],[2,4,12,-2,'Giao hữu giữa các khoa',10,'COMPLETED'],[2,6,5,-3,'Luyện tập tennis',2,'NO_SHOW'],[2,3,15,-4,'Đá giao hữu',10,'CANCELLED','Thay đổi kế hoạch'],[2,5,13,-5,'Sinh hoạt CLB bóng chuyền',12,'REJECTED','Trùng lịch sự kiện của nhà trường'],
+  [2,1,14,1,'Tập luyện CLB cầu lông',6,'PENDING'],[2,1,15,2,'Thi đấu giao hữu',4,'CONFIRMED'],[2,5,13,3,'Sinh hoạt CLB bóng chuyền',12,'CONFIRMED'],
+  [3,1,10,0,'Chơi giải trí',4,'CONFIRMED'],[4,1,11,0,'Chơi giải trí',4,'PENDING'],[3,1,12,1,'Tập luyện',4,'CONFIRMED'],[4,1,13,1,'Tập luyện',4,'CONFIRMED'],
+  [3,4,3,0,'Tập luyện bóng rổ',8,'CONFIRMED'],[4,5,4,0,'Giao hữu bóng chuyền',10,'CONFIRMED'],[3,3,12,0,'Đá giao hữu',10,'CONFIRMED'],[5,7,2,0,'Chơi bóng bàn',4,'COMPLETED'],
+  [3,3,14,1,'Đá giao hữu khoa CNTT',12,'PENDING'],[4,4,15,2,'Tập luyện đội tuyển',8,'PENDING'],[5,7,11,1,'Chơi bóng bàn giải trí',4,'PENDING'],[5,6,13,2,'Luyện tập tennis',2,'PENDING']].forEach(x=>add(...x));
+ const P=['Tập luyện CLB','Giao hữu giữa các lớp','Chơi giải trí','Luyện tập đội tuyển','Sinh hoạt nhóm'];
+ for(let i=0;i<1100;i++){const off=Math.floor(rnd()*37)-30;if(off==0)continue;const court=1+Math.floor(rnd()*7),h=rnd()<.6?17+Math.floor(rnd()*4):6+Math.floor(rnd()*16),x=rnd();
+  const status=off<0?(x<.74?'COMPLETED':x<.82?'NO_SHOW':'CANCELLED'):(x<.7?'CONFIRMED':'PENDING');
+  add(3+Math.floor(rnd()*3),court,h-5,off,P[Math.floor(rnd()*5)],1+Math.floor(rnd()*D.courts[court-1].cap),status,status=='CANCELLED'?'Đổi kế hoạch':'')}
+ D.bk.forEach((b,i)=>b.id=i+1);
+ D.nt.push({id:1,u:2,t:'Lượt đặt Sân cầu lông A1 ngày '+vd(dayAdd(2))+' đã được xác nhận.',read:0,at:Date.now()-36e5},{id:2,u:2,t:'Yêu cầu đặt Sân bóng chuyền D1 ngày '+vd(dayAdd(-5))+' bị từ chối: Trùng lịch sự kiện của nhà trường.',read:1,at:Date.now()-5*864e5});
+ return D}
+try{DB=JSON.parse(localStorage.getItem(K))}catch(e){}
+if(!DB)DB=seed();
+
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display='none',2600)};
+const M=h=>$('#modal').innerHTML=h?`<div class=ov><div class=md>${h}</div></div>`:'';
+const notify=(u,t)=>{DB.nt.push({id:DB.nid++,u,t,read:0,at:Date.now()})};
+const nm=b=>courtO(b.court).name+' ('+slotO(b.slot).s+'–'+slotO(b.slot).e+', '+vd(b.date)+')';
+
+function ss(c,date,s){
+ if(DB.maint.some(m=>m.court==c&&m.date==date&&(!m.slot||m.slot==s.id)))return{k:'maint'};
+ const b=DB.bk.find(b=>b.court==c&&b.date==date&&b.slot==s.id&&act(b));
+ if(b)return{k:b.status=='PENDING'?'pend':'busy',b};
+ return{k:new Date(date+'T'+s.s+':00')<=NOW()?'past':'free'}}
+function sweep(){let ch=0;DB.bk.forEach(b=>{if(b.status=='PENDING'&&(NOW()-b.created>12*36e5||stAt(b)-NOW()<36e5)){b.status='CANCELLED';b.reason='Hệ thống tự hủy do quá hạn xác nhận';notify(b.user,'Lượt đặt '+nm(b)+' đã bị hệ thống tự hủy do quá hạn xác nhận.');ch=1}});if(ch)save()}
+
+function book(court,date,s,purpose,n){const u=S.u,c=courtO(court),cf=DB.cfg;
+ if(u.until&&new Date(u.until)>NOW())return'Tài khoản đang bị khóa đặt sân đến '+vd(u.until.slice(0,10));
+ if(new Date(date+'T'+s.s+':00')<=NOW())return'Khung giờ này đã qua.';
+ if(Math.round((new Date(date+'T00:00:00')-T0())/864e5)>cf.adv)return'Chỉ được đặt trước tối đa '+cf.adv+' ngày.';
+ const mine=DB.bk.filter(b=>b.user==u.id&&act(b));
+ if(mine.length>=cf.max)return'Vượt hạn mức '+cf.max+' lượt đang hiệu lực cùng lúc.';
+ if(mine.filter(b=>b.date==date).length>=cf.day)return'Mỗi ngày chỉ được đặt tối đa '+cf.day+' khung giờ.';
+ if(!purpose.trim())return'Vui lòng nhập mục đích sử dụng.';
+ if(!(n>=1&&n<=c.cap))return'Số người tham gia phải từ 1 đến '+c.cap+' (sức chứa của sân).';
+ if(ss(court,date,s).k!='free')return'Khung giờ đã được đặt hoặc đang bảo trì. Vui lòng chọn khung giờ khác.';
+ DB.bk.push({id:DB.nid++,user:u.id,court,slot:s.id,date,purpose:purpose.trim(),n,status:'PENDING',reason:'',created:Date.now()});
+ DB.users.filter(x=>x.role=='ADMIN').forEach(a=>notify(a.id,u.name+' vừa gửi yêu cầu đặt '+courtO(court).name+' lúc '+s.s+' ngày '+vd(date)+'.'));save()}
+function cancel(id,reason,adm){const b=DB.bk.find(b=>b.id==id);if(!reason.trim())return'Bắt buộc nhập lý do hủy.';
+ if(!adm&&stAt(b)-NOW()<DB.cfg.cancelH*36e5)return'Chỉ được hủy trước giờ bắt đầu ít nhất '+DB.cfg.cancelH+' giờ.';
+ b.status='CANCELLED';b.reason=reason.trim();
+ if(adm)notify(b.user,'Lượt đặt '+nm(b)+' đã bị quản trị viên hủy: '+b.reason);else DB.users.filter(x=>x.role=='ADMIN').forEach(a=>notify(a.id,S.u.name+' đã hủy lượt đặt '+nm(b)+'.'));save()}
+
+const chip=(t,l,on,a)=>`<button class="chip ${on?'on':''}" data-a="${a}" data-v="${t}">${l}</button>`;
+const tbl=(h,rows)=>`<div class=tw><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows||`<tr><td colspan=${h.length} class=mu>Không có dữ liệu.</td></tr>`}</table></div>`;
+function pager(n){const p=Math.max(1,Math.ceil(n/10));if(S.pg>p)S.pg=p;return`<div class=pg><span>Trang ${S.pg}/${p} · ${n} bản ghi</span><button class="btn o s" data-a=pg data-v=-1 ${S.pg<=1?'disabled':''}>‹ Trước</button><button class="btn o s" data-a=pg data-v=1 ${S.pg>=p?'disabled':''}>Sau ›</button></div>`}
+const pg=a=>a.slice((S.pg-1)*10,S.pg*10);
+const sel=(id,opts,v)=>`<select id=${id}>${opts.map(o=>`<option value="${o[0]}" ${o[0]==v?'selected':''}>${o[1]}</option>`).join('')}</select>`;
+
+function courtCards(){const q=S.q.toLowerCase();
+ const l=DB.courts.filter(c=>c.on&&sportO(c.sport).on&&(!S.t||c.sport==S.t)&&c.name.toLowerCase().includes(q));
+ return l.map(c=>{const sp=sportO(c.sport);return`<div class=cd><div class=art>${sp.icon}</div><div class=pad><h3>${esc(c.name)}</h3><span class="bd inf">${sp.name}</span><p>📍 ${esc(c.loc)}</p><p>👥 Sức chứa tối đa ${c.cap} người</p><button class=btn style="margin-top:10px;width:100%" data-a=open data-v=${c.id}>Xem khung giờ &amp; đặt sân</button></div></div>`}).join('')||'<p class=mu>Không tìm thấy sân phù hợp.</p>'}
+
+const V={
+courts:()=>`<h2>Danh sách sân</h2><div class=bar><div style="display:flex;gap:6px;flex-wrap:wrap">${chip(0,'Tất cả',!S.t,'type')+DB.sports.filter(s=>s.on).map(s=>chip(s.id,s.icon+' '+s.name,S.t==s.id,'type')).join('')}</div><input id=q placeholder="Tìm theo tên sân…" value="${esc(S.q)}"></div><div id=cl class=cards>${courtCards()}</div>`,
+grid:()=>{const c=courtO(S.court),sp=sportO(c.sport);
+ const days=[...Array(DB.cfg.adv)].map((_,i)=>dayAdd(i));
+ const cells=DB.slots.filter(s=>s.on).map(s=>{const x=ss(c.id,S.date,s),mine=x.b&&x.b.user==S.u.id;
+  const lb={free:'Trống',pend:'Chờ xác nhận',busy:'Đã đặt',maint:'Bảo trì',past:'Đã qua'}[x.k]+(mine?' · của bạn':'');
+  return`<button class="sl ${x.k} ${mine?'mine':''}" ${x.k=='free'?`data-a=pick data-v=${s.id}`:'disabled'}><b>${s.s}–${s.e}</b><small>${lb}</small></button>`}).join('');
+ return`<button class="btn o s" data-a=nav data-v=courts>‹ Danh sách sân</button><h2 style="margin-top:12px">${sp.icon} ${esc(c.name)}</h2><p class=mu style="margin-top:-8px">📍 ${esc(c.loc)} · 👥 Tối đa ${c.cap} người</p>
+ <div class=days>${days.map(d=>{const x=new Date(d+'T00:00:00');return`<button class="chip ${d==S.date?'on':''}" data-a=day data-v=${d}><b>${WD[x.getDay()]}</b><br>${pad(x.getDate())}/${pad(x.getMonth()+1)}</button>`}).join('')}</div>
+ <div class=sg>${cells}</div><div class=lg><span><i style="background:var(--ok)"></i>Trống</span><span><i style="background:var(--wa)"></i>Chờ xác nhận</span><span><i style="background:var(--er)"></i>Đã đặt</span><span><i style="background:var(--gr)"></i>Bảo trì / đã qua</span></div>`},
+mine:()=>{const l=DB.bk.filter(b=>b.user==S.u.id&&act(b)).sort((a,b)=>stAt(a)-stAt(b));
+ return`<h2>Lịch đặt của tôi</h2>`+tbl(['Sân','Ngày','Khung giờ','Mục đích','Người','Trạng thái',''],l.map(b=>`<tr><td>${esc(courtO(b.court).name)}</td><td>${vd(b.date)}</td><td>${slotO(b.slot).s}–${slotO(b.slot).e}</td><td>${esc(b.purpose)}</td><td>${b.n}</td><td>${badge(b.status)}</td><td><button class="btn d s" data-a=cancel data-v=${b.id}>Hủy</button></td></tr>`).join(''))+`<p class=hint>Quy định: chỉ được hủy trước giờ bắt đầu ít nhất ${DB.cfg.cancelH} giờ. Lượt chờ xác nhận quá 12 giờ sẽ tự động bị hủy.</p>`},
+hist:()=>{const f=S.f||{},l=DB.bk.filter(b=>b.user==S.u.id&&!act(b)&&(!f.s||b.status==f.s)&&(!f.t||courtO(b.court).sport==f.t)&&(!f.a||b.date>=f.a)&&(!f.b||b.date<=f.b)).sort((a,b)=>stAt(b)-stAt(a));
+ return`<h2>Lịch sử sử dụng</h2><div class=bar><label style="margin:0">Từ</label><input type=date id=fa value="${f.a||''}"><label style="margin:0">Đến</label><input type=date id=fb value="${f.b||''}">${sel('fs',[['','Mọi trạng thái'],...Object.entries(ST).filter(x=>!['PENDING','CONFIRMED'].includes(x[0])).map(x=>[x[0],x[1][0]])],f.s||'')}${sel('ft',[['','Mọi loại sân'],...DB.sports.map(s=>[s.id,s.name])],f.t||'')}</div>`
+ +tbl(['Sân','Ngày','Khung giờ','Mục đích','Trạng thái','Ghi chú'],pg(l).map(b=>`<tr><td>${esc(courtO(b.court).name)}</td><td>${vd(b.date)}</td><td>${slotO(b.slot).s}–${slotO(b.slot).e}</td><td>${esc(b.purpose)}</td><td>${badge(b.status)}</td><td class=w>${b.status=='COMPLETED'?(b.fb?'⭐'.repeat(b.fb.r):`<button class="btn o s" data-a=fb data-v=${b.id}>Đánh giá sân</button>`):esc(b.reason)}</td></tr>`).join(''))+pager(l.length)},
+a_req:()=>{const wait=DB.bk.filter(b=>b.status=='PENDING'&&(!S.fc||b.court==S.fc)&&(!S.fd||b.date==S.fd)).sort((a,b)=>a.created-b.created),td=dayAdd(0);
+ const tdl=DB.bk.filter(b=>b.date==td&&['CONFIRMED','COMPLETED','NO_SHOW'].includes(b.status)).sort((a,b)=>a.slot-b.slot);
+ const tabs=`<div style="display:flex;gap:6px;margin-bottom:14px">${chip('wait','Chờ xác nhận ('+DB.bk.filter(b=>b.status=='PENDING').length+')',S.tab=='wait','tab')+chip('today','Hôm nay – ghi nhận sử dụng',S.tab=='today','tab')}</div>`;
+ if(S.tab=='today')return`<h2>Duyệt yêu cầu đặt sân</h2>${tabs}`+tbl(['Người đặt','Sân','Khung giờ','Mục đích','Trạng thái','Ghi nhận'],tdl.map(b=>{const st=stAt(b)<=NOW();return`<tr><td>${esc(userO(b.user).name)}</td><td>${esc(courtO(b.court).name)}</td><td>${slotO(b.slot).s}–${slotO(b.slot).e}</td><td>${esc(b.purpose)}</td><td>${badge(b.status)}</td><td>${b.status=='CONFIRMED'?`<button class="btn s" data-a=att data-v="${b.id}|COMPLETED" ${st?'':'disabled'}>Đã sử dụng</button> <button class="btn d s" data-a=att data-v="${b.id}|NO_SHOW" ${st?'':'disabled'}>Vắng mặt</button>`:'—'}</td></tr>`}).join(''));
+ return`<h2>Duyệt yêu cầu đặt sân</h2>${tabs}<div class=bar>${sel('fc',[['','Tất cả sân'],...DB.courts.map(c=>[c.id,c.name])],S.fc||'')}<input type=date id=fd value="${S.fd||''}"></div>`+tbl(['Gửi lúc','Người đặt','Sân','Ngày','Khung giờ','Mục đích','Người','Xử lý'],wait.map(b=>`<tr><td>${new Date(b.created).toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})}</td><td>${esc(userO(b.user).name)}</td><td>${esc(courtO(b.court).name)}</td><td>${vd(b.date)}</td><td>${slotO(b.slot).s}–${slotO(b.slot).e}</td><td>${esc(b.purpose)}</td><td>${b.n}</td><td><button class="btn s" data-a=ok data-v=${b.id}>Xác nhận</button> <button class="btn d s" data-a=rej data-v=${b.id}>Từ chối</button></td></tr>`).join(''))},
+a_courts:()=>`<h2>Quản lý sân và loại hình</h2><div class=two><div><div class=bar><h3 style="margin:0;flex:1">Sân</h3><button class="btn s" data-a=ec data-v=0>+ Thêm sân</button></div>`+tbl(['Tên sân','Loại hình','Sức chứa','Trạng thái',''],DB.courts.map(c=>`<tr><td>${esc(c.name)}</td><td>${sportO(c.sport).name}</td><td>${c.cap}</td><td>${c.on?'<span class="bd ok">Hoạt động</span>':'<span class="bd gr">Ngưng</span>'}</td><td><button class="btn o s" data-a=ec data-v=${c.id}>Sửa</button> <button class="btn o s" data-a=tc data-v=${c.id}>${c.on?'Ngưng':'Mở lại'}</button></td></tr>`).join(''))+`</div><div><div class=bar><h3 style="margin:0;flex:1">Loại hình thể thao</h3></div>`+tbl(['Loại hình','Trạng thái',''],DB.sports.map(s=>`<tr><td>${s.icon} ${s.name}</td><td>${s.on?'<span class="bd ok">Đang dùng</span>':'<span class="bd gr">Ẩn</span>'}</td><td><button class="btn o s" data-a=ts data-v=${s.id}>${s.on?'Ẩn':'Hiện'}</button></td></tr>`).join(''))+`<div class=bar style="margin-top:12px"><input id=ns placeholder="Tên loại hình mới"><button class="btn s" data-a=as>Thêm</button></div></div></div>`,
+a_slots:()=>{const cf=DB.cfg;return`<h2>Khung giờ, bảo trì và quy định</h2><div class=two><div><h3>Khung giờ chuẩn</h3>`+tbl(['Khung giờ','Trạng thái',''],DB.slots.map(s=>`<tr><td>${s.s}–${s.e}</td><td>${s.on?'<span class="bd ok">Đang dùng</span>':'<span class="bd gr">Tắt</span>'}</td><td><button class="btn o s" data-a=tsl data-v=${s.id}>${s.on?'Tắt':'Bật'}</button></td></tr>`).join(''))+`<div class=bar style="margin-top:12px"><input type=time id=s1><input type=time id=s2><button class="btn s" data-a=asl>Thêm khung giờ</button></div></div>
+ <div><h3>Khóa bảo trì</h3><div class=cd><div class=pad>${sel('mc',DB.courts.map(c=>[c.id,c.name]))}<label>Ngày</label><input type=date id=md value="${dayAdd(1)}"><label>Khung giờ</label>${sel('ms',[[0,'Cả ngày'],...DB.slots.map(s=>[s.id,s.s+'–'+s.e])])}<label>Lý do</label><input id=mr><button class=btn style="margin-top:12px" data-a=am>Khóa bảo trì</button><div class=err id=me></div></div></div>
+ <div style="margin-top:10px">`+tbl(['Sân','Ngày','Khung giờ','Lý do',''],DB.maint.map(m=>`<tr><td>${esc(courtO(m.court).name)}</td><td>${vd(m.date)}</td><td>${m.slot?slotO(m.slot).s:'Cả ngày'}</td><td class=w>${esc(m.reason)}</td><td><button class="btn o s" data-a=dm data-v=${m.id}>Gỡ</button></td></tr>`).join(''))+`</div><h3 style="margin-top:18px">Cấu hình quy định</h3><div class=cd><div class=pad>${[['adv','Số ngày đặt trước tối đa'],['day','Tối đa khung giờ/ngày'],['max','Tối đa lượt hiệu lực cùng lúc'],['cancelH','Hủy trước giờ bắt đầu (giờ)'],['miss','Số lần vắng mặt/tháng bị khóa']].map(x=>`<label>${x[1]}</label><input type=number min=1 data-c=${x[0]} value="${cf[x[0]]}">`).join('')}</div></div></div></div>`},
+a_users:()=>{const q=(S.q||'').toLowerCase(),mo=dayAdd(0).slice(0,7);return`<h2>Quản lý người dùng</h2><div class=bar><input id=q placeholder="Tìm theo tên, email, mã số…" value="${esc(S.q)}"></div><div id=ul>${ulist()}</div>`},
+a_hist:()=>{const l=hl();return`<h2>Lịch sử sử dụng toàn hệ thống</h2><div class=bar><input id=hq placeholder="Tìm người dùng…" value="${esc(S.hq||'')}">${sel('hs',[['','Mọi trạng thái'],...Object.entries(ST).map(x=>[x[0],x[1][0]])],S.hs||'')}${sel('hc',[['','Tất cả sân'],...DB.courts.map(c=>[c.id,c.name])],S.hc||'')}<button class="btn o s" data-a=csv>Xuất CSV</button></div><div id=hl>${htab(l)}</div>`},
+a_stats:()=>{const B=DB.bk,tot=B.length,cap=DB.courts.filter(c=>c.on).length*DB.slots.filter(s=>s.on).length,dd=[...Array(14)].map((_,i)=>dayAdd(i-13));
+ const used=d=>B.filter(b=>b.date==d&&['CONFIRMED','COMPLETED','NO_SHOW'].includes(b.status)).length,fr=dd.map(d=>Math.round(used(d)/cap*100)),avg=Math.round(fr.reduce((a,b)=>a+b,0)/14);
+ const cc=DB.courts.map(c=>[c.name,B.filter(b=>b.court==c.id&&!['CANCELLED','REJECTED'].includes(b.status)).length]),mx=Math.max(...cc.map(x=>x[1]),1);
+ const pk=DB.slots.map(s=>[s.s+'–'+s.e,B.filter(b=>b.slot==s.id&&!['CANCELLED','REJECTED'].includes(b.status)).length]).sort((a,b)=>b[1]-a[1]).slice(0,5);
+ const W=520,Hh=170,pt=fr.map((v,i)=>`${30+i*(W-50)/13},${Hh-25-v*(Hh-50)/Math.max(...fr,1)}`).join(' ');
+ return`<h2>Thống kê báo cáo</h2><div class=kp><div class=cd><b>${tot}</b><span>Tổng lượt đặt</span></div><div class=cd><b>${avg}%</b><span>Tỷ lệ lấp đầy (14 ngày)</span></div><div class=cd><b>${(B.filter(b=>b.status=='CANCELLED').length/tot*100).toFixed(1)}%</b><span>Tỷ lệ hủy</span></div><div class=cd><b>${(B.filter(b=>b.status=='NO_SHOW').length/tot*100).toFixed(1)}%</b><span>Tỷ lệ vắng mặt</span></div><div class=cd><b>${pk[0][0]}</b><span>Khung giờ cao điểm</span></div></div>
+ <div class=two><div class=cd><div class=pad><h3>Số lượt đặt theo sân</h3>${cc.map(x=>`<div class=br><span>${esc(x[0])}</span><div><i style="width:${x[1]/mx*100}%"></i></div><b>${x[1]}</b></div>`).join('')}</div></div>
+ <div class=cd><div class=pad><h3>Tỷ lệ lấp đầy theo ngày (%)</h3><svg viewBox="0 0 ${W} ${Hh}" width=100%><polyline fill=none stroke="var(--pr)" stroke-width=2.5 points="${pt}"/>${fr.map((v,i)=>`<circle cx="${30+i*(W-50)/13}" cy="${Hh-25-v*(Hh-50)/Math.max(...fr,1)}" r=3.5 fill="var(--pr)"/><text x="${30+i*(W-50)/13}" y="${Hh-6}" font-size=10 text-anchor=middle fill="var(--mu)">${dd[i].slice(8)}</text><text x="${30+i*(W-50)/13}" y="${Hh-34-v*(Hh-50)/Math.max(...fr,1)}" font-size=10 text-anchor=middle fill="var(--tx)">${v}</text>`).join('')}</svg></div></div></div>
+ <h3 style="margin-top:18px">Khung giờ cao điểm</h3>`+tbl(['Hạng','Khung giờ','Số lượt đặt'],pk.map((x,i)=>`<tr><td>${i+1}</td><td>${x[0]}</td><td>${x[1]}</td></tr>`).join(''))}};
+function ulist(){const q=(S.q||'').toLowerCase(),mo=dayAdd(0).slice(0,7);
+ return tbl(['Họ tên','Email','Mã số','Vắng mặt (tháng)','Trạng thái',''],DB.users.filter(u=>u.role=='USER'&&(u.name+u.email+u.code).toLowerCase().includes(q)).map(u=>{const lk=u.locked||(u.until&&new Date(u.until)>NOW());return`<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td>${esc(u.code)}</td><td>${DB.bk.filter(b=>b.user==u.id&&b.status=='NO_SHOW'&&b.date.startsWith(mo)).length}</td><td>${u.locked?'<span class="bd er">Khóa tài khoản</span>':lk?'<span class="bd wa">Khóa đặt sân</span>':'<span class="bd ok">Hoạt động</span>'}</td><td><button class="btn o s" data-a=lk data-v=${u.id}>${lk?'Mở khóa':'Khóa'}</button> <button class="btn o s" data-a=rp data-v=${u.id}>Đặt lại MK</button></td></tr>`}).join(''))}
+function hl(){const q=(S.hq||'').toLowerCase();return DB.bk.filter(b=>(!S.hs||b.status==S.hs)&&(!S.hc||b.court==S.hc)&&userO(b.user).name.toLowerCase().includes(q)&&!(b.status=='PENDING')).sort((a,b)=>stAt(b)-stAt(a))}
+const htab=l=>tbl(['Người dùng','Sân','Ngày','Khung giờ','Trạng thái','Ghi chú'],pg(l).map(b=>`<tr><td>${esc(userO(b.user).name)}</td><td>${esc(courtO(b.court).name)}</td><td>${vd(b.date)}</td><td>${slotO(b.slot).s}–${slotO(b.slot).e}</td><td>${badge(b.status)}</td><td class=w>${esc(b.reason)}</td></tr>`).join(''))+pager(l.length);
+
+function loginV(){return`<div class=lo><div class=cd><div style="text-align:center;font-size:42px">🏟️</div><h2 style="text-align:center;margin:6px 0 4px">${S.reg?'Đăng ký tài khoản':'Đăng nhập'}</h2><p class=mu style="text-align:center;margin:0 0 6px">Hệ thống đặt sân thể thao nội bộ</p>
+ ${S.reg?`<label>Họ tên</label><input id=rn><label>Mã số (MSSV/mã nhân viên)</label><input id=rc><label>Email</label><input id=re type=email><label>Số điện thoại (10 số)</label><input id=rp2><label>Mật khẩu (tối thiểu 8 ký tự)</label><input id=rw type=password><label>Xác nhận mật khẩu</label><input id=rw2 type=password>`:`<label>Email</label><input id=em type=email placeholder="ten@example.edu.vn"><label>Mật khẩu</label><input id=pw type=password placeholder="••••••••">`}
+ <div class=err id=le></div><button class=btn style="width:100%;margin-top:6px" data-a=${S.reg?'reg':'login'}>${S.reg?'Đăng ký':'Đăng nhập'}</button>
+ <p class=hint style="text-align:center">${S.reg?'Đã có tài khoản?':'Chưa có tài khoản?'} <a href="#" data-a=tr style="color:var(--pr)">${S.reg?'Đăng nhập':'Đăng ký'}</a></p>
+ ${S.reg?'':`<div class=hint>Tài khoản thử nghiệm:<br><button class="btn o s" data-a=fill data-v=u>Người dùng</button><button class="btn o s" data-a=fill data-v=a>Quản trị viên</button></div>`}</div></div>`}
+function render(){if(!S.u){$('#app').innerHTML=loginV();return}
+ const adm=S.u.role=='ADMIN',tabs=adm?[['a_req','Duyệt yêu cầu'],['a_courts','Sân & loại hình'],['a_slots','Khung giờ & bảo trì'],['a_users','Người dùng'],['a_hist','Lịch sử'],['a_stats','Thống kê']]:[['courts','Danh sách sân'],['mine','Lịch đặt của tôi'],['hist','Lịch sử sử dụng']];
+ const v=S.view=='grid'?'courts':S.view,un=DB.nt.filter(n=>n.u==S.u.id&&!n.read).length;
+ $('#app').innerHTML=`<header><span class=logo>🏟️ Đặt sân nội bộ</span><nav>${tabs.map(t=>`<button class="${t[0]==v?'on':''}" data-a=nav data-v=${t[0]}>${t[1]}</button>`).join('')}</nav><div class=ur><button class="btn o s" data-a=bell>🔔${un?' '+un:''}</button><span>${esc(S.u.name)}<br><small>${adm?'Quản trị viên':'Người dùng'}</small></span><button class="btn o s" data-a=logout>Đăng xuất</button></div></header><main>${V[S.view]()}</main>`}
+
+const A={
+ tr:()=>{S.reg=!S.reg;render()},fill:v=>{S.reg=0;render();$('#em').value=v=='u'?'user01@example.edu.vn':'admin@example.edu.vn';$('#pw').value=v=='u'?'User@12345':'Admin@12345'},
+ login:()=>{const e=$('#em').value.trim(),p=$('#pw').value,er=m=>$('#le').textContent=m;
+  if(!e||!p)return er('Bắt buộc nhập email và mật khẩu.');if(!/^\S+@\S+\.\S+$/.test(e))return er('Email không đúng định dạng.');
+  const u=DB.users.find(u=>u.email==e&&u.pw==p);if(!u)return er('Email hoặc mật khẩu không đúng.');if(u.locked)return er('Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.');
+  S.u=u;S.view=u.role=='ADMIN'?'a_req':'courts';sweep();render()},
+ reg:()=>{const g=i=>$('#'+i).value.trim(),er=m=>$('#le').textContent=m;
+  if(!g('rn')||!g('rc')||!g('re')||!g('rp2')||!g('rw'))return er('Vui lòng nhập đầy đủ thông tin.');if(!/^\S+@\S+\.\S+$/.test(g('re')))return er('Email không đúng định dạng.');
+  if(!/^\d{10}$/.test(g('rp2')))return er('Số điện thoại phải gồm đúng 10 chữ số.');if($('#rw').value.length<8)return er('Mật khẩu tối thiểu 8 ký tự.');if($('#rw').value!=$('#rw2').value)return er('Mật khẩu xác nhận không khớp.');
+  if(DB.users.some(u=>u.email==g('re')||u.code==g('rc')||u.phone==g('rp2')))return er('Email, mã số hoặc số điện thoại đã tồn tại.');
+  DB.users.push({id:DB.nid++,email:g('re'),pw:$('#rw').value,name:g('rn'),code:g('rc'),phone:g('rp2'),role:'USER',locked:0,until:''});save();S.reg=0;render();toast('Đăng ký thành công, vui lòng đăng nhập.')},
+ logout:()=>{S.u=null;render()},nav:v=>{S.view=v;S.pg=1;S.q='';render()},type:v=>{S.t=+v;render()},open:v=>{S.court=+v;S.date=dayAdd(0);S.view='grid';render()},day:v=>{S.date=v;render()},tab:v=>{S.tab=v;render()},pg:v=>{S.pg+=+v;render()},
+ pick:v=>{const s=slotO(v),c=courtO(S.court);M(`<h3>Đặt sân</h3><p class=mu style="margin:0">${esc(c.name)} · ${s.s}–${s.e} · ${vd(S.date)}</p><label>Mục đích sử dụng</label><input id=pp><label>Số người tham gia (tối đa ${c.cap})</label><input id=nn type=number min=1 max=${c.cap} value=2><div class=err id=me></div><div class=ac><button class="btn o" data-a=x>Đóng</button><button class=btn data-a=bk data-v=${s.id}>Gửi yêu cầu</button></div>`)},
+ x:()=>M(''),bk:v=>{const e=book(S.court,S.date,slotO(v),$('#pp').value,+$('#nn').value);if(e){$('#me').textContent=e;if(e.includes('vừa bị'))render();return}M('');render();toast('Yêu cầu đã được gửi, vui lòng chờ quản trị viên xác nhận.')},
+ cancel:v=>M(`<h3>Hủy lịch đặt</h3><label>Lý do hủy</label><textarea id=rs rows=3></textarea><div class=err id=me></div><div class=ac><button class="btn o" data-a=x>Đóng</button><button class="btn d" data-a=dc data-v=${v}>Xác nhận hủy</button></div>`),
+ dc:v=>{const e=cancel(v,$('#rs').value,S.u.role=='ADMIN');if(e)return $('#me').textContent=e;M('');render();toast('Đã hủy lượt đặt, khung giờ được giải phóng.')},
+ fb:v=>M(`<h3>Đánh giá sân</h3><label>Số sao</label>${sel('fr',[5,4,3,2,1].map(n=>[n,'⭐'.repeat(n)]))}<label>Nội dung (10–500 ký tự)</label><textarea id=ft2 rows=3></textarea><div class=err id=me></div><div class=ac><button class="btn o" data-a=x>Đóng</button><button class=btn data-a=sfb data-v=${v}>Gửi</button></div>`),
+ sfb:v=>{const t=$('#ft2').value.trim();if(t.length<10||t.length>500)return $('#me').textContent='Nội dung phải từ 10 đến 500 ký tự.';DB.bk.find(b=>b.id==v).fb={r:+$('#fr').value,t};save();M('');render();toast('Cảm ơn bạn đã phản hồi.')},
+ bell:()=>{const l=DB.nt.filter(n=>n.u==S.u.id).sort((a,b)=>b.at-a.at).slice(0,12);M(`<h3>Thông báo</h3>${l.map(n=>`<p style="margin:8px 0;${n.read?'color:var(--mu)':'font-weight:600'}">${esc(n.t)}<br><small class=mu>${new Date(n.at).toLocaleString('vi-VN')}</small></p>`).join('')||'<p class=mu>Chưa có thông báo.</p>'}<div class=ac><button class=btn data-a=x>Đóng</button></div>`);l.forEach(n=>n.read=1);save();render()},
+ ok:v=>{const b=DB.bk.find(b=>b.id==v);if(b.status!='PENDING')return toast('Yêu cầu này không còn ở trạng thái chờ xác nhận.');b.status='CONFIRMED';notify(b.user,'Lượt đặt '+nm(b)+' đã được xác nhận.');save();render();toast('Đã xác nhận.')},
+ rej:v=>M(`<h3>Từ chối yêu cầu</h3><label>Lý do từ chối</label><textarea id=rs rows=3></textarea><div class=err id=me></div><div class=ac><button class="btn o" data-a=x>Đóng</button><button class="btn d" data-a=drj data-v=${v}>Từ chối</button></div>`),
+ drj:v=>{const r=$('#rs').value.trim();if(!r)return $('#me').textContent='Bắt buộc nhập lý do từ chối.';const b=DB.bk.find(b=>b.id==v);b.status='REJECTED';b.reason=r;notify(b.user,'Lượt đặt '+nm(b)+' bị từ chối: '+r);save();M('');render();toast('Đã từ chối yêu cầu.')},
+ att:v=>{const[id,s]=v.split('|'),b=DB.bk.find(b=>b.id==id);b.status=s;
+  if(s=='NO_SHOW'){const mo=b.date.slice(0,7),n=DB.bk.filter(x=>x.user==b.user&&x.status=='NO_SHOW'&&x.date.startsWith(mo)).length;if(n>=DB.cfg.miss){const d=new Date();d.setDate(d.getDate()+14);userO(b.user).until=d.toISOString();notify(b.user,'Bạn vắng mặt '+n+' lần trong tháng nên bị khóa đặt sân 14 ngày.');toast('Người dùng vắng mặt '+n+' lần: khóa đặt sân 14 ngày.')}}save();render()},
+ ec:v=>{const c=+v?courtO(+v):{name:'',sport:1,loc:'',cap:10};M(`<h3>${+v?'Sửa sân':'Thêm sân'}</h3><label>Tên sân</label><input id=cn value="${esc(c.name)}"><label>Loại hình</label>${sel('cs',DB.sports.map(s=>[s.id,s.name]),c.sport)}<label>Vị trí</label><input id=cl2 value="${esc(c.loc)}"><label>Sức chứa</label><input id=cp type=number min=1 value=${c.cap}><div class=err id=me></div><div class=ac><button class="btn o" data-a=x>Đóng</button><button class=btn data-a=sc data-v=${v}>Lưu</button></div>`)},
+ sc:v=>{const n=$('#cn').value.trim(),p=+$('#cp').value;if(!n||!(p>0))return $('#me').textContent='Vui lòng nhập tên sân và sức chứa hợp lệ.';const o={name:n,sport:+$('#cs').value,loc:$('#cl2').value.trim(),cap:p};if(+v)Object.assign(courtO(+v),o);else DB.courts.push({id:DB.nid++,on:1,...o});save();M('');render()},
+ tc:v=>{const c=courtO(+v);c.on=c.on?0:1;save();render()},ts:v=>{const s=sportO(+v);s.on=s.on?0:1;save();render()},
+ as:()=>{const n=$('#ns').value.trim();if(!n||DB.sports.some(s=>s.name.toLowerCase()==n.toLowerCase()))return toast('Tên loại hình trống hoặc đã tồn tại.');DB.sports.push({id:DB.nid++,name:n,icon:'🏅',on:1});save();render()},
+ tsl:v=>{const s=slotO(+v);s.on=s.on?0:1;save();render()},
+ asl:()=>{const a=$('#s1').value,b=$('#s2').value;if(!a||!b||b<=a)return toast('Giờ kết thúc phải sau giờ bắt đầu.');if(DB.slots.some(s=>s.on&&a<s.e&&b>s.s))return toast('Khung giờ bị chồng lấn với khung giờ đã có.');DB.slots.push({id:DB.nid++,s:a,e:b,on:1});DB.slots.sort((x,y)=>x.s.localeCompare(y.s));save();render()},
+ am:()=>{const c=+$('#mc').value,d=$('#md').value,s=+$('#ms').value,r=$('#mr').value.trim();if(!d||!r)return $('#me').textContent='Vui lòng nhập ngày và lý do bảo trì.';
+  const hit=DB.bk.filter(b=>b.court==c&&b.date==d&&(!s||b.slot==s)&&act(b));hit.forEach(b=>{b.status='CANCELLED';b.reason='Sân bảo trì: '+r;notify(b.user,'Lượt đặt '+nm(b)+' bị hủy do sân bảo trì: '+r)});
+  DB.maint.push({id:DB.nid++,court:c,date:d,slot:s,reason:r});save();render();toast('Đã khóa bảo trì'+(hit.length?', hủy '+hit.length+' lượt bị ảnh hưởng và thông báo cho người đặt.':'.'))},
+ dm:v=>{DB.maint=DB.maint.filter(m=>m.id!=v);save();render()},
+ lk:v=>{const u=userO(+v),lk=u.locked||(u.until&&new Date(u.until)>NOW());u.locked=0;u.until='';if(!lk)u.locked=1;save();$('#ul').innerHTML=ulist()},
+ rp:v=>{userO(+v).pw='User@12345';save();toast('Đã đặt lại mật khẩu về User@12345.')},
+ csv:()=>{const t='Người dùng,Sân,Ngày,Khung giờ,Trạng thái,Ghi chú\n'+hl().map(b=>[userO(b.user).name,courtO(b.court).name,b.date,slotO(b.slot).s+'-'+slotO(b.slot).e,ST[b.status][0],b.reason].map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n');M(`<h3>Xuất báo cáo CSV</h3><p class=mu style="margin:0 0 8px">Sao chép nội dung dưới đây và dán vào tệp .csv.</p><textarea id=cv rows=10 readonly>${esc(t)}</textarea><div class=ac><button class="btn o" data-a=x>Đóng</button><button class=btn data-a=cp>Sao chép</button></div>`)},
+ cp:()=>{const t=$('#cv');t.select();try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand('copy')}toast('Đã sao chép.')}};
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(t){e.preventDefault();A[t.dataset.a](t.dataset.v,t)}});
+document.addEventListener('input',e=>{const t=e.target;if(t.id=='q'){S.q=t.value;if($('#cl'))$('#cl').innerHTML=courtCards();else $('#ul').innerHTML=ulist()}
+ else if(t.id=='hq'){S.hq=t.value;S.pg=1;$('#hl').innerHTML=htab(hl())}});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset.c){const n=Math.max(1,+t.value||1);DB.cfg[t.dataset.c]=n;t.value=n;save();toast('Đã lưu cấu hình.');return}
+ const f={fa:'a',fb:'b',fs:'s',ft:'t'};if(f[t.id]){S.f=S.f||{};S.f[f[t.id]]=t.value;S.pg=1;render()}
+ else if(t.id=='fc'||t.id=='fd'){S[t.id]=t.value;render()}else if(t.id=='hs'||t.id=='hc'){S[t.id]=t.value;S.pg=1;render()}});
+sweep();setInterval(()=>{sweep()},60000);render();
+</script></body></html>
